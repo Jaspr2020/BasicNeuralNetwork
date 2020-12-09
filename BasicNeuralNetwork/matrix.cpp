@@ -24,6 +24,12 @@ Matrix::Matrix(int rows, int cols, int mean, int deviation) {
 	FillData(mean, deviation);
 }
 
+Matrix::Matrix(const Matrix& m) {
+	m_rows = m.m_rows;
+	m_cols = m.m_cols;
+	m_data = m.m_data;
+}
+
 void Matrix::FillData(double value) {
 	m_data.assign(m_rows, vector<double>(m_cols, 0));
 	for (vector<double> &row : m_data) {
@@ -108,8 +114,13 @@ vector<double> Matrix::ColAt(int colIndex)
 	return col;
 }
 
-Matrix Matrix::operator+(const Matrix& m)
-{
+Matrix Matrix::operator=(const Matrix& m) {
+	m_rows = m.m_rows;
+	m_cols = m.m_cols;
+	m_data = m.m_data;
+}
+
+Matrix Matrix::operator+(const Matrix& m) {
 	if (m_rows == m.m_rows && m_cols == m.m_cols) {
 		Matrix matrix(m_rows, m_cols);
 		for (int i = 0; i < m_rows; i++) {
@@ -122,8 +133,7 @@ Matrix Matrix::operator+(const Matrix& m)
 	return *this;
 }
 
-Matrix Matrix::operator-(const Matrix& m)
-{
+Matrix Matrix::operator-(const Matrix& m) {
 	if (m_rows == m.m_rows && m_cols == m.m_cols) {
 		Matrix matrix(m_rows, m_cols);
 		for (int i = 0; i < m_rows; i++) {
@@ -151,8 +161,7 @@ Matrix Matrix::operator*(const Matrix& m) {
 	return *this;
 }
 
-Matrix Matrix::operator*(const double& scalar)
-{
+Matrix Matrix::operator*(const double& scalar) {
 	Matrix m = *this;
 	for (vector<double> &row : m.m_data) {
 		for (double &value : row) {
@@ -162,8 +171,7 @@ Matrix Matrix::operator*(const double& scalar)
 	return m;
 }
 
-Matrix Matrix::operator/(const double& scalar)
-{
+Matrix Matrix::operator/(const double& scalar) {
 	Matrix m = *this;
 	for (vector<double> &row : m.m_data) {
 		for (double &value : row) {

@@ -13,6 +13,7 @@ public:
 	Matrix(int rows, int cols);
 	Matrix(int rows, int cols, double value);
 	Matrix(int rows, int cols, int mean, int deviation);
+	Matrix(const Matrix& m);
 	void FillData(double value);
 	void FillData(int mean, int deviation);
 	int GetRows();
@@ -24,6 +25,7 @@ public:
 	double& At(int row, int col);
 	vector<double> RowAt(int rowIndex);
 	vector<double> ColAt(int colIndex);
+	Matrix operator=(const Matrix& m);
 	Matrix operator+(const Matrix& m);
 	Matrix operator-(const Matrix& m);
 	Matrix operator*(const Matrix& m);
