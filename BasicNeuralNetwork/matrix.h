@@ -5,7 +5,6 @@
 #include <vector>
 #include <string>
 #include <random>
-using namespace std;
 
 class Matrix {
 public:
@@ -18,13 +17,13 @@ public:
 	void FillData(int mean, int deviation);
 	int GetRows();
 	int GetCols();
-	vector<vector<double>> GetData();
-	pair<int, int> GetShape();
-	string ToString();
-	vector<vector<double>>& ToVector();
+	std::vector<std::vector<double>> GetData();
+	std::pair<int, int> GetShape();
+	std::string ToString();
+	std::vector<std::vector<double>>& ToVector();
 	double& At(int row, int col);
-	vector<double> RowAt(int rowIndex);
-	vector<double> ColAt(int colIndex);
+	std::vector<double> RowAt(int rowIndex);
+	std::vector<double> ColAt(int colIndex);
 	Matrix operator=(const Matrix& m);
 	Matrix operator+(const Matrix& m);
 	Matrix operator-(const Matrix& m);
@@ -35,11 +34,11 @@ public:
 	Matrix operator-=(const Matrix& m);
 	Matrix operator*=(const double& scalar);
 	Matrix operator/=(const double& scalar);
-	vector<double>& operator[](const int& row);
+	std::vector<double>& operator[](const int& row);
 private:
 	int m_rows;
 	int m_cols;
-	vector<vector<double>> m_data;
+	std::vector<std::vector<double>> m_data;
 };
 
 #endif

@@ -1,22 +1,66 @@
 #include "neuralnetwork.h"
 
-string toString(vector<int> v);
-string toString(vector<double> v);
-string toString(vector<vector<int>> v);
-string toString(vector<vector<double>> v);
-string toString(vector<Matrix> v);
+//std::string toString(std::vector<int> v);
+//std::string toString(std::vector<double> v);
+//std::string toString(std::vector<std::vector<int>> v);
+//std::string toString(std::vector<std::vector<double>> v);
+//std::string toString(std::vector<Matrix> v);
+
+namespace printing {
+
+	//Returns a string holding the vector of integers 
+	std::string toString(std::vector<int> v) {
+		std::string str = "";
+		for (unsigned int i = 0; i < v.size(); i++)
+			str += (i == 0 ? "(" : "") + std::to_string(v.at(i)) + (i == v.size() - 1 ? ")" : ", ");
+		return str;
+	}
+
+	//Returns a string holding the vector of doubles 
+	std::string toString(std::vector<double> v) {
+		std::string str = "";
+		for (unsigned int i = 0; i < v.size(); i++)
+			str += (i == 0 ? "(" : "") + std::to_string(v.at(i)) + (i == v.size() - 1 ? ")" : ", ");
+		return str;
+	}
+
+	//Returns a string holding the 2D vector of integers 
+	std::string toString(std::vector<std::vector<int>> v) {
+		std::string str = "";
+		for (unsigned int i = 0; i < v.size(); i++)
+			str += (i == 0 ? "[" : "") + toString(v.at(i)) + (i == v.size() - 1 ? "]" : ", ");
+		return str;
+	}
+
+	//Returns a string holding the 2D vector of doubles 
+	std::string toString(std::vector<std::vector<double>> v) {
+		std::string str = "";
+		for (unsigned int i = 0; i < v.size(); i++)
+			str += (i == 0 ? "[" : "") + toString(v.at(i)) + (i == v.size() - 1 ? "]" : ", ");
+		return str;
+	}
+
+	//Returns a string holding the vector of matrices 
+	std::string toString(std::vector<Matrix> v) {
+		std::string str = "";
+		for (unsigned int i = 0; i < v.size(); i++)
+			str += v.at(i).ToString() + '\n' + (i == v.size() - 1 ? ' ' : '\n');
+		return str;
+	}
+
+}
 
 int main() {
-	vector<int> layer_sizes{ 2, 5, 10 };
+	std::vector<int> layer_sizes{ 2, 5, 10 };
 	Matrix x(layer_sizes[0], 1, 1);
 	NeuralNetwork net(layer_sizes);
 	//Matrix prediction = net.predict(x);
 
-	vector<vector<vector<double>>> trainingImages;
+	std::vector<std::vector<std::vector<double>>> trainingImages;
 	for (int i = 0; i < 10; i++) {
-		vector<vector<double>> v2d;
+		std::vector<std::vector<double>> v2d;
 		for (int j = 0; j < 10; j++) {
-			vector<double> v;
+			std::vector<double> v;
 			for (int k = 0; k < 10; k++) {
 				v.push_back(i+j+k);
 			}
@@ -39,7 +83,7 @@ int main() {
 	//str += ")";
 	//cout << str << endl;
 
-	vector<Matrix> trainingLabels;
+	std::vector<Matrix> trainingLabels;
 	for (int i = 0; i < 10; i++) {
 		Matrix m(10, 1, 0, 1);
 		trainingLabels.push_back(m);
@@ -58,39 +102,4 @@ int main() {
 	//cout << prediction.ToString() << endl;
 
 	return 0;
-}
-
-string toString(vector<int> v) {
-	string str = "";
-	for (unsigned int i = 0; i < v.size(); i++)
-		str += (i == 0 ? "(" : "") + to_string(v.at(i)) + (i == v.size() - 1 ? ")" : ", ");
-	return str;
-}
-
-string toString(vector<double> v) {
-	string str = "";
-	for (unsigned int i = 0; i < v.size(); i++)
-		str += (i == 0 ? "(" : "") + to_string(v.at(i)) + (i == v.size() - 1 ? ")" : ", ");
-	return str;
-}
-
-string toString(vector<vector<int>> v) {
-	string str = "";
-	for (unsigned int i = 0; i < v.size(); i++)
-		str += (i == 0 ? "[" : "") + toString(v.at(i)) + (i == v.size() - 1 ? "]" : ", ");
-	return str;
-}
-
-string toString(vector<vector<double>> v) {
-	string str = "";
-	for (unsigned int i = 0; i < v.size(); i++)
-		str += (i == 0 ? "[" : "") + toString(v.at(i)) + (i == v.size() - 1 ? "]" : ", ");
-	return str;
-}
-
-string toString(vector<Matrix> v) {
-	string str = "";
-	for (unsigned int i = 0; i < v.size(); i++)
-		str += v.at(i).ToString() + '\n' + (i == v.size() - 1 ? ' ' : '\n');
-	return str;
 }

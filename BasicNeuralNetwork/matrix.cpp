@@ -31,8 +31,8 @@ Matrix::Matrix(const Matrix& m) {
 }
 
 void Matrix::FillData(double value) {
-	m_data.assign(m_rows, vector<double>(m_cols, 0));
-	for (vector<double> &row : m_data) {
+	m_data.assign(m_rows, std::vector<double>(m_cols, 0));
+	for (std::vector<double> &row : m_data) {
 		for (double &val : row) {
 			val = value;
 		}
@@ -40,13 +40,13 @@ void Matrix::FillData(double value) {
 }
 
 void Matrix::FillData(int mean, int deviation) {
-	random_device ran;
-	default_random_engine generator(ran());
-	normal_distribution<double> distribution(mean, deviation);
+	std::random_device ran;
+	std::default_random_engine generator(ran());
+	std::normal_distribution<double> distribution(mean, deviation);
 
-	m_data.assign(m_rows, vector<double>(m_cols, 0));
+	m_data.assign(m_rows, std::vector<double>(m_cols, 0));
 
-	for (vector<double> &row : m_data) {
+	for (std::vector<double> &row : m_data) {
 		for (double &value : row) {
 			value = distribution(generator);
 		}
@@ -61,38 +61,38 @@ int Matrix::GetCols() {
 	return m_cols;
 }
 
-vector<vector<double>> Matrix::GetData() {
+std::vector<std::vector<double>> Matrix::GetData() {
 	return m_data;
 }
 
-pair<int, int> Matrix::GetShape()
+std::pair<int, int> Matrix::GetShape()
 {
-	pair<int, int> size;
-	size = make_pair(m_rows, m_cols);
+	std::pair<int, int> size;
+	size = std::make_pair(m_rows, m_cols);
 	return size;
 }
 
-string Matrix::ToString() {
+std::string Matrix::ToString() {
 	bool negativeIncluded = false;
 
-	for (vector<double> row : m_data) {
+	for (std::vector<double> row : m_data) {
 		for (double value : row) {
 			if (value < 0) negativeIncluded = true;
 		}
 	}
 
-	string str = "";
+	std::string str = "";
 	for (unsigned int i = 0; i < m_data.size(); i++) {
 		str += (i == 0 ? "[" : " ");
 		for (unsigned int j = 0; j < m_data[i].size(); j++) {
-			str += (j == 0 ? "[" : "") + (string)(m_data[i][j] >= 0 && negativeIncluded ? " " : "") + to_string(m_data[i][j]) + (j == m_data[i].size() - 1 ? "]" : " ");
+			str += (j == 0 ? "[" : "") + (std::string)(m_data[i][j] >= 0 && negativeIncluded ? " " : "") + std::to_string(m_data[i][j]) + (j == m_data[i].size() - 1 ? "]" : " ");
 		}
 		str += (i == m_data.size() - 1 ? "]" : "\n");
 	}
 	return str;
 }
 
-vector<vector<double>>& Matrix::ToVector() {
+std::vector<std::vector<double>>& Matrix::ToVector() {
 	return m_data;
 }
 
@@ -100,24 +100,27 @@ double& Matrix::At(int row, int col) {
 	return m_data[row][col];
 }
 
-vector<double> Matrix::RowAt(int rowIndex)
+std::vector<double> Matrix::RowAt(int rowIndex)
 {
 	return m_data[rowIndex];
 }
 
-vector<double> Matrix::ColAt(int colIndex)
+std::vector<double> Matrix::ColAt(int colIndex)
 {
-	vector<double> col;
-	for (vector<double> row : m_data) {
+	std::vector<double> col;
+	for (std::vector<double> row : m_data) {
 		col.push_back(row.at(colIndex));
 	}
 	return col;
 }
 
 Matrix Matrix::operator=(const Matrix& m) {
-	m_rows = m.m_rows;
-	m_cols = m.m_cols;
-	m_data = m.m_data;
+	if (this != &m) {
+		m_rows = m.m_rows;
+		m_cols = m.m_cols;
+		m_data = m.m_data;
+	}
+	return *this;
 }
 
 Matrix Matrix::operator+(const Matrix& m) {
@@ -163,7 +166,7 @@ Matrix Matrix::operator*(const Matrix& m) {
 
 Matrix Matrix::operator*(const double& scalar) {
 	Matrix m = *this;
-	for (vector<double> &row : m.m_data) {
+	for (std::vector<double> &row : m.m_data) {
 		for (double &value : row) {
 			value *= scalar;
 		}
@@ -173,7 +176,7 @@ Matrix Matrix::operator*(const double& scalar) {
 
 Matrix Matrix::operator/(const double& scalar) {
 	Matrix m = *this;
-	for (vector<double> &row : m.m_data) {
+	for (std::vector<double> &row : m.m_data) {
 		for (double &value : row) {
 			value /= scalar;
 		}
@@ -204,7 +207,7 @@ Matrix Matrix::operator-=(const Matrix& m) {
 }
 
 Matrix Matrix::operator*=(const double& scalar) {
-	for (vector<double> &row : m_data) {
+	for (std::vector<double> &row : m_data) {
 		for (double &value : row) {
 			value *= scalar;
 		}
@@ -213,7 +216,7 @@ Matrix Matrix::operator*=(const double& scalar) {
 }
 
 Matrix Matrix::operator/=(const double& scalar) {
-	for (vector<double> &row : m_data) {
+	for (std::vector<double> &row : m_data) {
 		for (double &value : row) {
 			value /= scalar;
 		}
@@ -221,6 +224,6 @@ Matrix Matrix::operator/=(const double& scalar) {
 	return *this;
 }
 
-vector<double>& Matrix::operator[](const int& row) {
+std::vector<double>& Matrix::operator[](const int& row) {
 	return m_data.at(row);
 }

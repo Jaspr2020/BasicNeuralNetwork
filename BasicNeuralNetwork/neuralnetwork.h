@@ -6,18 +6,17 @@
 #include <vector>
 #include <string>
 #include <math.h>
-using namespace std;
 
 class NeuralNetwork {
 public:
-	NeuralNetwork(vector<int> layer_sizes);
+	NeuralNetwork(std::vector<int> layer_sizes);
 	Matrix predict(Matrix a);
-	void trainSGD(vector<vector<vector<double>>> trainingImages, vector<Matrix> trainingLabels, int epochs, int batchSize, double learningRate);
-	void updateBatch(vector<pair<vector<vector<double>>, Matrix>> &batch, double learningRate);
-	vector<vector<Matrix>> backPropagation(vector<vector<double>> &sample, Matrix &label);
+	void trainSGD(std::vector<std::vector<std::vector<double>>> trainingImages, std::vector<Matrix> trainingLabels, int epochs, int batchSize, double learningRate);
+	void updateBatch(std::vector<std::pair<std::vector<std::vector<double>>, Matrix>> &batch, double learningRate);
+	std::pair<std::vector<Matrix>, std::vector<Matrix>> backPropagation(std::vector<std::vector<double>> &sample, Matrix &label);
 private:
-	vector<Matrix> weights;
-	vector<Matrix> biases;
+	std::vector<Matrix> weights;
+	std::vector<Matrix> biases;
 
 	Matrix Activation(Matrix x);
 };
